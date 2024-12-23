@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Animation wave -->
+    <style>
+        @keyframes wave {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            10% {
+                transform: rotate(14deg);
+            }
+
+            20% {
+                transform: rotate(-8deg);
+            }
+
+            30% {
+                transform: rotate(14deg);
+            }
+
+            40% {
+                transform: rotate(-4deg);
+            }
+
+            50% {
+                transform: rotate(10deg);
+            }
+
+            60% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .animate-wave {
+            animation: wave 2.5s infinite;
+            transform-origin: 70% 70%;
+            display: inline-block;
+        }
+
+        /* Style pour le défilement fluide */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Style pour compenser la hauteur de la navbar fixe */
+        section {
+            scroll-margin-top: 4rem;
+            /* Ajuste la position de défilement pour les ancres */
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Effet de grain subtil */
+        .image-grain::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+        }
+
+        /* Effet de brillance */
+        .group:hover::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            padding: 2px;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.5;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Animation de rotation lente */
+        .animate-spin-slow {
+            animation: spin 15s linear infinite;
+        }
+
+        .animate-spin-reverse {
+            animation: spin 20s linear infinite reverse;
+        }
+
+        /* Animation des étoiles scintillantes */
+        .animate-twinkle {
+            animation: twinkle 2s ease-in-out infinite;
+            color: #ffd700;
+            font-size: 1.5rem;
+            opacity: 0;
+        }
+
+        /* Particules flottantes */
+        .particle-1,
+        .particle-2,
+        .particle-3 {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: float-particle 6s ease-in-out infinite;
+        }
+
+        .particle-1 {
+            top: 20%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .particle-2 {
+            top: 60%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        .particle-3 {
+            bottom: 20%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes float-particle {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            25% {
+                transform: translateY(-20px) translateX(10px);
+                opacity: 1;
+            }
+
+            75% {
+                transform: translateY(20px) translateX(-10px);
+                opacity: 1;
+            }
+        }
+
+        /* Effet de brillance au survol */
+        .group:hover .particle-1,
+        .group:hover .particle-2,
+        .group:hover .particle-3 {
+            animation-duration: 4s;
+        }
+
+        /* Délais pour les animations */
+        .delay-75 {
+            animation-delay: 0.75s;
+        }
+
+        .delay-150 {
+            animation-delay: 1.5s;
+        }
+
+        .delay-300 {
+            animation-delay: 3s;
+        }
+
+        /* Animation d'éclipse */
+        @keyframes eclipse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+        }
+
+        /* Animation de pulse modifiée */
+        @keyframes custom-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .animate-eclipse {
+            animation: eclipse 4s ease-in-out infinite;
+        }
+
+        .animate-custom-pulse {
+            animation: custom-pulse 3s ease-in-out infinite;
+        }
+
+        /* Effet de brillance amélioré */
+        .group:hover::after {
+            content: "";
+            position: absolute;
+            inset: -4px;
+            border-radius: 9999px;
+            background: linear-gradient(45deg,
+                    rgba(59, 130, 246, 0.5),
+                    rgba(139, 92, 246, 0.5),
+                    rgba(59, 130, 246, 0.5));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            animation: rotate 4s linear infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        .group:hover::after {
+            opacity: 1;
+        }
+
+        /* Ombre subtile pour les cartes */
+        .bg-white\/10 {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Effet de bordure lumineux */
+        .border-blue-500\/20 {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Style pour les badges de technologie */
+        .bg-gray-700 {
+            background-color: rgba(55, 65, 81, 0.8);
+            backdrop-filter: blur(4px);
+        }
+
+        .group:hover .absolute {
+            transition-delay: 100ms;
+        }
+
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header avec Navigation -->
+    <nav class="bg-violet-800 shadow-lg fixed w-full z-50 top-0">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <!-- Logo -->
+                <div class="flex space-x-7">
+                    <div class="flex items-center py-4">
+                        <span class="font-semibold text-white text-lg">My Portfolio</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden flex items-center px-3 py-2" id="mobile-menu-button">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+
+                <!-- Navigation Menu -->
+                <div class="hidden md:flex items-center space-x-3" id="menu-items">
+                    <a href="#profil"
+                        class="py-4 px-2 text-white hover:text-orange-400 transition duration-300 uppercase font-bold">Profile</a>
+                    <a href="#projets"
+                        class="py-4 px-2 text-white hover:text-orange-400 transition duration-300 uppercase font-bold">Projects</a>
+                    <a href="#contact"
+                        class="py-4 px-2 text-white hover:text-orange-400 transition duration-300 uppercase font-bold">Contact</a>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="flex flex-col space-y-2 pb-3">
+                    <a href="#profil"
+                        class="py-2 px-2 text-white hover:text-orange-400 transition duration-300 uppercase font-bold">Profile</a>
+                    <a href="#projets"
+                        class="py-2 px-2 text-white hover:text-orange-400 transition duration-300 uppercase font-bold">Projects</a>
+                    <a href="#contact"
+                        class="py-2 px-2 text-white hover:text-orange-400 transition duration-300 uppercase font-bold">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section Introduction -->
+    <section id="profil" class="min-h-screen bg-violet-950 flex items-center relative overflow-hidden pt-16">
+        <div class="max-w-6xl mx-auto px-4 py-12 md:py-10 relative z-10 w-full">
+            <!-- Container flex avec meilleure gestion responsive -->
+            <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-12">
+                <!-- Partie texte -->
+                <div class="w-full md:w-2/3 text-white space-y-4 md:space-y-6 text-center md:text-left mt-8 md:mt-0">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold">
+                        Hello <span class="inline-block animate-wave">👋</span>
+                    </h1>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+                        My name is <span class="text-orange-400">TERMOUSSI LAMIAA</span>
+                    </h2>
+
+                    <div class="space-y-3 md:space-y-4">
+                        <p class="text-xl sm:text-2xl text-gray-300">
+                            Full Stack Developer specialized in
+                            <span class="text-orange-400">Java</span> &
+                            <span class="text-orange-400">Angular</span>
+                            <span class="text-orange-500">🔥</span>
+                        </p>
+                        <p class="text-lg sm:text-xl text-white italic">
+                            Creating modern web and high-performance desktop applications.
+                        </p>
+                    </div>
+
+                    <!-- Réseaux sociaux -->
+                    <div class="flex justify-center md:justify-start space-x-4 md:space-x-6 py-4 md:py-6">
+                        <!-- Liens sociaux avec taille adaptative -->
+                        <a href="https://github.com/TERMOUSSI-LAMIAA" target="_blank"
+                            class="w-10 md:w-12 h-10 md:h-12 bg-[#1E293B] border-2 border-[#fff] rounded-full flex items-center justify-center transition-all duration-300">
+                            <svg class="w-6 h-6 text-orange-400 hover:text-white" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/lamiaa-termoussi-094535290/" target="_blank"
+                            class="w-12 h-12 bg-[#1E293B] border-2 border-[#fff] rounded-full flex items-center justify-center transition-all duration-300">
+                            <svg class="w-6 h-6 text-orange-400 hover:text-white" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                        </a>
+                        <a href="mailto:lamiaa3105@gmail.com" target="_blank"
+                            class="w-12 h-12 bg-[#1E293B] border-2 border-[#fff] rounded-full flex items-center justify-center transition-all duration-300">
+                            <svg class="w-6 h-6 text-orange-400 hover:text-white" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2.917 16.083c-2.258 0-4.083-1.825-4.083-4.083s1.825-4.083 4.083-4.083c1.103 0 2.024.402 2.735 1.067l-1.107 1.068c-.304-.292-.834-.63-1.628-.63-1.394 0-2.531 1.155-2.531 2.579 0 1.424 1.138 2.579 2.531 2.579 1.616 0 2.224-1.162 2.316-1.762h-2.316v-1.4h3.855c.036.204.064.408.064.677.001 2.332-1.563 3.988-3.919 3.988zm9.917-3.5h-1.75v1.75h-1.167v-1.75h-1.75v-1.166h1.75v-1.75h1.167v1.75h1.75v1.166z" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Bouton CV -->
+                    <div class="pt-2 md:pt-4">
+                        <a href="MonCV.pdf" target="_blank"
+                            class="inline-block bg-violet-800 text-white px-6 md:px-8 py-2 md:py-3 rounded-lg hover:bg-orange-400 transition-colors text-base md:text-lg font-medium">
+                            Download Resume
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Image illustration -->
+                <div class="w-full md:w-1/2 flex justify-center items-center px-4 md:px-0">
+                    <div class="relative group">
+                        <!-- Cercles orbitaux -->
+                        <div class="absolute inset-0 animate-spin-slow">
+                            <div
+                                class="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full blur-sm">
+                            </div>
+                            <div
+                                class="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-purple-500 rounded-full blur-sm">
+                            </div>
+                            <div
+                                class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-cyan-500 rounded-full blur-sm">
+                            </div>
+                            <div
+                                class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-pink-500 rounded-full blur-sm">
+                            </div>
+                        </div>
+
+                        <!-- Étoiles scintillantes -->
+                        <div class="absolute inset-0">
+                            <div class="absolute top-[20%] left-[10%] animate-twinkle">
+                                ★
+                            </div>
+                            <div class="absolute top-[15%] right-[20%] animate-twinkle delay-75">
+                                ★
+                            </div>
+                            <div class="absolute bottom-[25%] left-[15%] animate-twinkle delay-150">
+                                ★
+                            </div>
+                            <div class="absolute bottom-[20%] right-[15%] animate-twinkle delay-300">
+                                ★
+                            </div>
+                        </div>
+
+                        <!-- Container principal de l'image avec nouveaux effets -->
+                        <div class="relative">
+                            <!-- Cercles d'éclipse -->
+                            <div class="absolute inset-0 z-20">
+                                <!-- Cercle extérieur rotatif -->
+                                <div
+                                    class="absolute inset-[-15px] border-4 border-dashed border-blue-400/30 rounded-full animate-spin-slow">
+                                </div>
+
+                                <!-- Cercles orbitaux -->
+                                <div class="absolute inset-[-30px] animate-spin-reverse">
+                                    <div
+                                        class="absolute top-1/2 left-[-8px] w-4 h-4 bg-blue-500 rounded-full blur-[2px] shadow-lg shadow-blue-500/50">
+                                    </div>
+                                    <div
+                                        class="absolute top-1/2 right-[-8px] w-4 h-4 bg-purple-500 rounded-full blur-[2px] shadow-lg shadow-purple-500/50">
+                                    </div>
+                                </div>
+
+                                <!-- Anneaux lumineux -->
+                                <div
+                                    class="absolute inset-[-20px] border-2 border-blue-400/20 rounded-full animate-pulse">
+                                </div>
+                                <div
+                                    class="absolute inset-[-10px] border-2 border-purple-400/20 rounded-full animate-pulse delay-150">
+                                </div>
+                            </div>
+
+                            <!-- Cercle rotatif avec gradient -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-spin-reverse blur opacity-30">
+                            </div>
+
+                            <!-- Container de l'image -->
+                            <div
+                                class="relative z-10 w-[300px] h-[300px] rounded-full overflow-hidden border-4 border-white/20 shadow-lg group-hover:border-blue-500/50 transition-colors duration-500">
+                                <!-- Overlay d'éclipse -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                </div>
+
+                                <img src="moi.jpg" alt="Developer Illustration"
+                                    class="w-full h-full object-cover transform group-hover:scale-105 transition-all duration-500" />
+                            </div>
+
+                            <!-- Effet d'éclipse au survol -->
+                            <div
+                                class="absolute inset-0 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                <div
+                                    class="absolute inset-[-2px] bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-sm animate-pulse">
+                                </div>
+                            </div>
+
+                            <!-- Particules flottantes -->
+                            <div class="absolute inset-0 z-20">
+                                <div class="particle-1"></div>
+                                <div class="particle-2"></div>
+                                <div class="particle-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fond décoratif -->
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-900/20 to-transparent"></div>
+    </section>
+
+    <!-- Section Compétences -->
+    <section class="bg-gradient-to-r from-purple-500 to-indigo-600 py-16">
+        <div class="container mx-auto text-center text-white">
+            <h2 class="text-4xl font-extrabold mb-6">Skills</h2>
+            <div class="w-16 h-1 bg-white mx-auto rounded-full mb-12"></div>
+
+            <!-- Skill Categories -->
+            <div class="flex flex-wrap justify-center gap-12">
+                <!-- Programming Languages -->
+                <div
+                    class="w-full sm:w-1/2 lg:w-1/4 p-6 bg-white text-center rounded-xl shadow-xl transition-transform transform hover:scale-105 hover:shadow-2xl">
+                    <h3 class="font-semibold text-xl text-purple-600 mb-4">Programming Languages</h3>
+                    <div class="flex justify-around">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                            alt="python" class="w-12 h-12" title="Python" />
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg"
+                            alt="javascript" class="w-12 h-12" title="JavaScript" />
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg"
+                            alt="php" class="w-12 h-12" title="PHP" />
+                    </div>
+                </div>
+
+                <!-- Frontend -->
+                <div
+                    class="w-full sm:w-1/2 lg:w-1/4 p-6 bg-white text-center rounded-xl shadow-xl transition-transform transform hover:scale-105 hover:shadow-2xl">
+                    <h3 class="font-semibold text-xl text-purple-600 mb-4">Frontend</h3>
+                    <div class="flex justify-around">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg"
+                            alt="html5" class="w-12 h-12" title="HTML5" />
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg"
+                            alt="css3" class="w-12 h-12" title="CSS3" />
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/angularjs/angularjs-original.svg"
+                            alt="angular" class="w-12 h-12" title="Angular" />
+                    </div>
+                </div>
+
+                <!-- Backend -->
+                <div
+                    class="w-full sm:w-1/2 lg:w-1/4 p-6 bg-white text-center rounded-xl shadow-xl transition-transform transform hover:scale-105 hover:shadow-2xl">
+                    <h3 class="font-semibold text-xl text-purple-600 mb-4">Backend</h3>
+                    <div class="flex justify-around">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/spring/spring-original-wordmark.svg"
+                            alt="spring" class="w-12 h-12" title="Spring" />
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/laravel.svg" alt="laravel"
+                            class="w-12 h-12" title="Laravel" />
+                    </div>
+                </div>
+
+                <!-- Databases -->
+                <div
+                    class="w-full sm:w-1/2 lg:w-1/4 p-6 bg-white text-center rounded-xl shadow-xl transition-transform transform hover:scale-105 hover:shadow-2xl">
+                    <h3 class="font-semibold text-xl text-purple-600 mb-4">Databases</h3>
+                    <div class="flex justify-around">
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg"
+                            alt="mysql" class="w-12 h-12" title="MySQL" />
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg"
+                            alt="mongodb" class="w-12 h-12" title="MongoDB" />
+                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg"
+                            alt="postgresql" class="w-12 h-12" title="PostgreSQL" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skill Sections -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mt-16">
+                <!-- Design and Tools -->
+                <div class="p-8 bg-white rounded-xl shadow-xl hover:scale-105 transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-purple-600 mb-6 text-center">Design (UML & Merise)</h3>
+                    <div class="flex justify-center gap-6">
+                        <div
+                            class="flex items-center justify-center w-16 h-16 bg-purple-100 rounded-lg shadow-lg transition-transform transform hover:scale-110">
+                            <img src="imgs/uml.png" alt="uml" class="w-12 h-12" title="UML" />
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-16 h-16 bg-purple-100 rounded-lg shadow-lg transition-transform transform hover:scale-110">
+                            <img src="imgs/merise.jpg" alt="merise" class="w-12 h-12" title="Merise" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools Section -->
+                <div class="p-8 bg-white rounded-xl shadow-xl hover:scale-105 transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-purple-600 mb-6 text-center">Tools</h3>
+                    <div class="flex justify-center gap-6">
+                        <div
+                            class="flex items-center justify-center w-16 h-16 bg-purple-100 rounded-lg shadow-lg transition-transform transform hover:scale-110">
+                            <img src="imgs/Figma-logo.svg.png" alt="figma" class="w-12 h-12" title="Figma" />
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-16 h-16 bg-purple-100 rounded-lg shadow-lg transition-transform transform hover:scale-110">
+                            <img src="imgs/trello.svg" alt="trello" class="w-12 h-12" title="Trello" />
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-16 h-16 bg-purple-100 rounded-lg shadow-lg transition-transform transform hover:scale-110">
+                            <img src="imgs/jira-1.svg" alt="jira" class="w-12 h-12" title="Jira" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DevOps and Quality -->
+                <div class="p-8 bg-white rounded-xl shadow-xl hover:scale-105 transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-purple-600 mb-6 text-center">DevOps & Quality</h3>
+                    <div class="flex justify-center gap-6">
+                        <div
+                            class="flex items-center justify-center w-16 h-16 bg-purple-100 rounded-lg shadow-lg transition-transform transform hover:scale-110">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/docker.svg" alt="docker"
+                                class="w-12 h-12" title="Docker" />
+                        </div>
+                        <div
+                            class="flex items-center justify-center w-16 h-16 bg-purple-100 rounded-lg shadow-lg transition-transform transform hover:scale-110">
+                            <img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="jenkins"
+                                class="w-12 h-12" title="Jenkins" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <!-- Section Projets -->
+    <section id="projets" class="py-16 bg-gradient-to-r from-purple-900 via-indigo-800 to-purple-900">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl  font-extrabold text-center text-white mb-6 uppercase">
+                My Recent Projects
+                <div class="w-32 h-1 bg-gradient-to-r from-orange-400 to-yellow-400 mx-auto mt-4 rounded-full"></div>
+            </h2>
+
+            <!-- Grille des projets -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                <!-- Project 1: Music Catalog -->
+                <div class="project-card bg-white/20 backdrop-blur-lg rounded-xl overflow-hidden border-2 border-gray-900 hover:shadow-lg transition duration-300"
+                    data-category="backend">
+                    <div class="relative">
+                        <div class="absolute inset-0 border-4 border-blue-500/20 rounded-t-xl"></div>
+                        <img src="imgs/music.jpg" alt="Music Catalog with Authentication JWT"
+                            class="w-full h-56 object-cover rounded-t-xl" loading="lazy" />
+                        <div
+                            class="absolute top-4 right-4 bg-blue-500/90 px-3 py-1 rounded-full flex items-center gap-2">
+                            <div>
+                                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                </svg>
+                            </div>
+                            <a href="https://github.com/TERMOUSSI-LAMIAA/MusicCatalog.git" target="_blank"
+                                aria-label="View Backend Code for Music Catalog">
+                                <span class="text-white text-sm font-medium">Backend</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3 uppercase">MUSIC CATALOG</h3>
+                        <p class="text-gray-300 mb-4">
+                            This application implements a REST API for managing a music catalog with user and admin
+                            roles,
+                            offering secure album and song management with stateless authentication.
+                        </p>
+                        <!-- Technologies -->
+                        <div class="mb-6">
+                            <p class="text-sm font-medium text-gray-400 mb-2">Technologies used:</p>
+                            <div class="flex gap-6 items-center">
+                                <div class="group relative">
+                                    <div class="bg-white p-2 rounded-lg hover:bg-gray-400 transition-all duration-300">
+                                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
+                                            alt="Java" class="w-8 h-8" title="Java" />
+                                    </div>
+                                </div>
+                                <div class="group relative">
+                                    <div class="bg-white p-2 rounded-lg hover:bg-gray-400 transition-all duration-300">
+                                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/spring/spring-original.svg"
+                                            alt="Spring" class="w-8 h-8" title="Spring" />
+                                    </div>
+                                </div>
+                                <div class="group relative">
+                                    <div class="bg-white p-2 rounded-lg hover:bg-gray-400 transition-all duration-300">
+                                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg"
+                                            alt="PostgreSQL" class="w-8 h-8" title="PostgreSQL" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Products Management -->
+                <div class="project-card bg-white/20 backdrop-blur-lg rounded-xl overflow-hidden border-2 border-gray-900 hover:shadow-lg transition duration-300"
+                    data-category="backend">
+                    <div class="relative">
+                        <div class="absolute inset-0 border-4 border-blue-500/20 rounded-t-xl"></div>
+                        <img src="imgs/product.jpg" alt="Products Management"
+                            class="w-full h-56 object-cover rounded-t-xl" loading="lazy" />
+                        <div
+                            class="absolute top-4 right-4 bg-blue-500/90 px-3 py-1 rounded-full flex items-center gap-2">
+                            <div>
+                                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                </svg>
+                            </div>
+                            <a href="https://github.com/TERMOUSSI-LAMIAA/ProductsManagement.git" target="_blank"
+                                aria-label="View Backend Code for Products Management">
+                                <span class="text-white text-sm font-medium">Backend</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3 uppercase">PRODUCTS MANAGEMENT</h3>
+                        <p class="text-gray-300 mb-4">
+                            An API that facilitates the management of products with categories, implemented with an
+                            authentication layer for user and admin roles.
+                        </p>
+                        <!-- Technologies -->
+                        <div class="mb-6">
+                            <p class="text-sm font-medium text-gray-400 mb-2">Technologies used:</p>
+                            <div class="flex gap-6 items-center">
+                                <div class="group relative">
+                                    <div class="bg-white p-2 rounded-lg hover:bg-gray-400 transition-all duration-300">
+                                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
+                                            alt="Java" class="w-8 h-8" title="Java" />
+                                    </div>
+                                </div>
+                                <div class="group relative">
+                                    <div class="bg-white p-2 rounded-lg hover:bg-gray-400 transition-all duration-300">
+                                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/spring/spring-original.svg"
+                                            alt="Spring" class="w-8 h-8" title="Spring" />
+                                    </div>
+                                </div>
+                                <div class="group relative">
+                                    <div class="bg-white p-2 rounded-lg hover:bg-gray-400 transition-all duration-300">
+                                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg"
+                                            alt="PostgreSQL" class="w-8 h-8" title="PostgreSQL" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 2: Citronix -->
+                <div class="project-card bg-white/20 backdrop-blur-lg rounded-xl overflow-hidden border-2 border-gray-900 hover:shadow-lg transition duration-300"
+                    data-category="backend">
+                    <div class="relative">
+                        <div class="absolute inset-0 border-4 border-blue-500/20 rounded-t-xl"></div>
+                        <img src="imgs/citron.jpg" alt="Citronix Management System"
+                            class="w-full h-56 object-cover rounded-t-xl" loading="lazy" />
+                        <div
+                            class="absolute top-4 right-4 bg-blue-500/90 px-3 py-1 rounded-full flex items-center gap-2">
+                            <div>
+                                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                </svg>
+                            </div>
+                            <a href="https://github.com/TERMOUSSI-LAMIAA/Citronix.git" target="_blank"
+                                aria-label="View Backend Code for Citronix">
+                                <span class="text-white text-sm font-medium">Backend</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3 uppercase">CITRONIX</h3>
+                        <p class="text-gray-300 mb-4">
+                            A comprehensive application that provides a management system for tracking inventory,
+                            products, and sales
+                            for a business specializing in citrus products.
+                        </p>
+                        <!-- Technologies -->
+                        <div class="mb-6">
+                            <p class="text-sm font-medium text-gray-400 mb-2">Technologies used:</p>
+                            <div class="flex gap-6 items-center">
+                                <div class="group relative">
+                                    <div class="bg-white p-2 rounded-lg hover:bg-gray-400 transition-all duration-300">
+                                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
+                                            alt="Java" class="w-8 h-8" title="Java" />
+                                    </div>
+                                </div>
+                                <div class="group relative">
+                                    <div class="bg-white p-2 rounded-lg hover:bg-gray-400 transition-all duration-300">
+                                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/spring/spring-original.svg"
+                                            alt="Spring" class="w-8 h-8" title="Spring" />
+                                    </div>
+                                </div>
+                                <div class="group relative">
+                                    <div class="bg-white p-2 rounded-lg hover:bg-gray-400 transition-all duration-300">
+                                        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg"
+                                            alt="PostgreSQL" class="w-8 h-8" title="PostgreSQL" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End of Project Grid -->
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="py-16 bg-gradient-to-r from-purple-500 to-indigo-600 text-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-4xl font-extrabold text-center mb-6 ">Contact Me</h2>
+            <div class="w-16 h-1 bg-white mx-auto mb-6 rounded-full"></div>
+
+            <!-- Contact Card -->
+            <div class="bg-white rounded-2xl shadow-lg p-10 text-gray-800">
+                <h3 class="text-2xl font-bold text-center mb-6">Get In Touch</h3>
+                <div class="space-y-6">
+                    <!-- Email Contact -->
+                    <div class="flex items-center space-x-4 transition-transform transform hover:scale-105">
+                        <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <a href="mailto:lamiaa3105@gmail.com"
+                            class="text-orange-400 hover:text-violet-950 font-semibold text-lg">lamiaa3105@gmail.com</a>
+                    </div>
+                    <!-- phone -->
+                    <div class="flex items-center space-x-4 transition-transform transform hover:scale-105">
+                        <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6z" />
+                        </svg>
+                        <a href="tel:+212624682050"
+                            class="text-orange-400 hover:text-violet-950 font-semibold text-lg">+(212) 624682050</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-violet-950 text-white py-8">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <!-- Copyright Notice -->
+            <p class="text-sm text-gray-500">&copy; 2024 TERMOUSSI-LAMIAA. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- Script pour le filtrage -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const filterBtns = document.querySelectorAll(".filter-btn");
+            const projectCards = document.querySelectorAll(".project-card");
+
+            // Fonction de filtrage
+            function filterProjects(category) {
+                projectCards.forEach((card) => {
+                    if (category === "all" || card.dataset.category === category) {
+                        card.style.display = "block";
+                        // Animation d'apparition
+                        card.style.opacity = "0";
+                        card.style.transform = "translateY(20px)";
+                        setTimeout(() => {
+                            card.style.opacity = "1";
+                            card.style.transform = "translateY(0)";
+                        }, 100);
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            }
+
+            // Gestionnaire d'événements pour les boutons de filtre
+            filterBtns.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    // Mise à jour de la classe active
+                    filterBtns.forEach((b) =>
+                        b.classList.remove("active", "bg-blue-500")
+                    );
+                    btn.classList.add("active", "bg-blue-500");
+
+                    // Filtrage des projets
+                    filterProjects(btn.dataset.filter);
+                });
+            });
+        });
+    </script>
+
+    <!-- Styles pour l'animation des cartes -->
+    <style>
+        .project-card {
+            transition: all 0.4s ease-in-out;
+        }
+
+        /* Style pour le bouton actif */
+        .filter-btn.active {
+            background-color: rgb(59, 130, 246);
+            font-weight: 500;
+        }
+
+        /* Animation d'apparition des cartes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-card {
+            animation: fadeInUp 0.5s ease-out;
+        }
+    </style>
+
+    <!-- Ajoutez ce script à la fin de votre body -->
+    <script>
+        // Menu mobile toggle
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        mobileMenuButton.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        // Fermer le menu mobile lors du clic sur un lien
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+        mobileLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.add("hidden");
+            });
+        });
+    </script>
+</body>
+
+</html>
